@@ -22,6 +22,12 @@
                             <a class="dropdown-item" href="#">ログアウト</a>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">ユーザー登録</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">ログイン</a>
+                    </li>
                 </ul>
             </div>
         </div>
