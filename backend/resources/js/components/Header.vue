@@ -13,21 +13,23 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/user">ユーザー一覧</a>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown" v-if="isLogin">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            ユーザー
+                            {{ username }}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="#">マイブログ一覧</a>
                             <a class="dropdown-item" href="#" @click.prevent="logout">ログアウト</a>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/register">ユーザー登録</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">ログイン</a>
-                    </li>
+                    <template v-else>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register">ユーザー登録</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">ログイン</a>
+                        </li>
+                    </template>
                 </ul>
             </div>
         </div>
@@ -40,6 +42,14 @@ export default {
         async logout() {
             await this.$store.dispatch('auth/logout')
             this.$router.push('/login')
+        }
+    },
+    computed: {
+        isLogin() {
+            return this.$store.getters['auth/check']
+        },
+        username() {
+            return this.$store.getters['auth/username']
         }
     }
 }

@@ -6,6 +6,8 @@ import UserList from './pages/UserList.vue'
 import Register from './pages/Register.vue'
 import Login from './pages/Login.vue'
 
+import store from './store'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -21,10 +23,24 @@ const routes = [
     {
       path: '/register',
       component: Register,
+      beforeEnter(to, from, next) {
+        if (store.getters['auth/check']) {
+          next('/')
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/login',
       component: Login,
+      beforeEnter(to, from, next) {
+        if (store.getters['auth/check']) {
+          next('/')
+        } else {
+          next()
+        }
+      }
     },
 ]
 

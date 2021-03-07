@@ -28,11 +28,16 @@ import App from './App.vue'
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+ const createApp = async() => {
+    await store.dispatch('auth/currentUser')
 
-const app = new Vue({
-    el: '#app',
-    router,
-    store,
-    components: { App },
-    template: '<App />'
-});
+    new Vue({
+        el: '#app',
+        router,
+        store,
+        components: { App },
+        template: '<App />'
+    })
+}
+
+createApp()
