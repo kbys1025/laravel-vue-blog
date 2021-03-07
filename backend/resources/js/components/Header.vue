@@ -19,7 +19,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="#">マイブログ一覧</a>
-                            <a class="dropdown-item" href="#">ログアウト</a>
+                            <a class="dropdown-item" href="#" @click.prevent="logout">ログアウト</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -35,5 +35,12 @@
 </template>
 
 <script>
-export default {}
+export default {
+    methods: {
+        async logout() {
+            await this.$store.dispatch('auth/logout')
+            this.$router.push('/login')
+        }
+    }
+}
 </script>

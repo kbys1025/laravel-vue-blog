@@ -35,7 +35,7 @@
                                 <label for="password-confirm" class="col-md-4 col-form-label text-md-right">パスワード(確認用)</label>
 
                                 <div class="col-md-6">
-                                    <input id="password-confirm" type="password" class="form-control" v-model="registerForm.password_confirm">
+                                    <input id="password-confirm" type="password" class="form-control" v-model="registerForm.password_confirmation">
                                 </div>
                             </div>
 
@@ -62,13 +62,14 @@ export default {
                 name: '',
                 email: '',
                 password: '',
-                password_confirm: ''
+                password_confirmation: ''
             }
         }
     },
     methods: {
-        register () {
-            console.log(this.registerForm)
+        async register() {
+            await this.$store.dispatch('auth/register', this.registerForm)
+            this.$router.push('/')
         }
     }
 }
