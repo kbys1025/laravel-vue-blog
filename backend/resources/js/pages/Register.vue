@@ -7,6 +7,17 @@
 
                     <div class="card-body">
                         <form @submit.prevent="register">
+                            <div v-if="registerErrors" class="text-danger">
+                                <ul v-if="registerErrors.name">
+                                    <li v-for="msg in registerErrors.name" :key="msg">{{ msg }}</li>
+                                </ul>
+                                <ul v-if="registerErrors.email">
+                                    <li v-for="msg in registerErrors.email" :key="msg">{{ msg }}</li>
+                                </ul>
+                                <ul v-if="registerErrors.password">
+                                    <li v-for="msg in registerErrors.password" :key="msg">{{ msg }}</li>
+                                </ul>
+                            </div>
                             <div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">名前</label>
 
@@ -66,11 +77,27 @@ export default {
             }
         }
     },
+    computed: {
+        apiStatus() {
+            return this.$store.state.auth.apiStatus
+        },
+        registerErrors () {
+            return this.$store.state.auth.registerErrorMessages
+        }
+    },
     methods: {
         async register() {
             await this.$store.dispatch('auth/register', this.registerForm)
-            this.$router.push('/')
+            if (this.apiStatus) {
+                this.$router.push('/')
+            }
+        },
+        clearError () {
+            this.$store.commit('auth/setRegisterErrorMessages', null)
         }
+    },
+    created() {
+        this.clearError()
     }
 }
 </script>

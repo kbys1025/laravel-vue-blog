@@ -5,6 +5,7 @@ import BlogList from './pages/BlogList.vue'
 import UserList from './pages/UserList.vue'
 import Register from './pages/Register.vue'
 import Login from './pages/Login.vue'
+import SystemError from './pages/errors/System.vue'
 
 import store from './store'
 
@@ -42,6 +43,10 @@ const routes = [
         }
       }
     },
+    {
+      path: '/500',
+      component: SystemError
+    }
 ]
 
 const router = new VueRouter({

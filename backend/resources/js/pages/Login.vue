@@ -7,6 +7,14 @@
 
                     <div class="card-body">
                         <form @submit.prevent="login">
+                            <div v-if="loginErrors" class="text-danger">
+                                <ul v-if="loginErrors.email">
+                                    <li v-for="msg in loginErrors.email" :key="msg">{{ msg }}</li>
+                                </ul>
+                                <ul v-if="loginErrors.password">
+                                    <li v-for="msg in loginErrors.password" :key="msg">{{ msg }}</li>
+                                </ul>
+                            </div>
                             <div class="form-group row">
                                 <label for="email" class="col-md-4 col-form-label text-md-right">メールアドレス</label>
 
@@ -48,11 +56,28 @@ export default {
             }
         }
     },
+    computed: {
+        apiStatus() {
+            return this.$store.state.auth.apiStatus
+        },
+        loginErrors () {
+            return this.$store.state.auth.loginErrorMessages
+        }
+    },
     methods: {
         async login() {
             await this.$store.dispatch('auth/login', this.loginForm)
-            this.$router.push('/')
+
+            if (this.apiStatus) {
+                this.$router.push('/')
+            }
+        },
+        clearError () {
+            this.$store.commit('auth/setLoginErrorMessages', null)
         }
+    },
+    created() {
+        this.clearError()
     }
 }
 </script>
